@@ -1,6 +1,8 @@
 package com.example.avito_intership.di
 
+import com.example.avito_intership.data.repository.FirebaseAuthRepository
 import com.example.avito_intership.data.repository.FakeSettingsRepository
+import com.example.avito_intership.domain.repository.AuthRepository
 import com.example.avito_intership.domain.repository.SettingsRepository
 import dagger.Binds
 import dagger.Module
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindSettingsRepository(
         repository: FakeSettingsRepository,
     ): SettingsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAuthRepository(
+        repository: FirebaseAuthRepository,
+    ): AuthRepository
 }

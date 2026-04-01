@@ -8,11 +8,11 @@ import com.example.avito_intership.presentation.components.ScreenScaffold
 fun ProfileRoute(
     onNavigateBack: () -> Unit,
 ) {
-    ScreenScaffold(title = "Profile") {
+    ScreenScaffold(title = "Профиль") {
         PlaceholderScreen(
-            title = "Your profile",
-            description = "User details and theme settings will appear here",
-            primaryActionLabel = "Back",
+            title = "Ваш профиль",
+            description = "Здесь будут данные пользователя и настройки темы",
+            primaryActionLabel = "Назад",
             onPrimaryAction = onNavigateBack,
         )
     }

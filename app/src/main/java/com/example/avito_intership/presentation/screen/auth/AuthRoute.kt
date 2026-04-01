@@ -5,21 +5,56 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.avito_intership.presentation.components.ScreenScaffold
 
 @Composable
 fun AuthRoute(
     onOpenRegister: () -> Unit,
     onOpenChatList: () -> Unit,
+    viewModel: AuthViewModel = hiltViewModel(),
 ) {
-    ScreenScaffold(title = "Sign in") {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.effects.collect { effect ->
+            when (effect) {
+                AuthEffect.NavigateToChatList -> onOpenChatList()
+                is AuthEffect.ShowError -> {
+                    val result = snackbarHostState.showSnackbar(
+                        message = effect.message,
+                        actionLabel = if (effect.canRetry) "Повторить" else null,
+                        duration = SnackbarDuration.Long,
+                    )
+                    if (effect.canRetry && result == androidx.compose.material3.SnackbarResult.ActionPerformed) {
+                        viewModel.onAction(AuthAction.RetryClicked)
+                    }
+                }
+            }
+        }
+    }
+
+    ScreenScaffold(
+        title = "Вход",
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -27,25 +62,38 @@ fun AuthRoute(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text(text = "Welcome back")
+            Text(text = "С возвращением")
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = uiState.email,
+                onValueChange = { viewModel.onAction(AuthAction.EmailChanged(it)) },
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text("Email") },
-                enabled = false,
+                enabled = !uiState.isLoading,
+                singleLine = true,
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = uiState.password,
+                onValueChange = { viewModel.onAction(AuthAction.PasswordChanged(it)) },
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Password") },
-                enabled = false,
+                label = { Text("Пароль") },
+                enabled = !uiState.isLoading,
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
             )
-            Button(onClick = onOpenChatList) {
-                Text(text = "Sign in")
+            Button(
+                onClick = { viewModel.onAction(AuthAction.SubmitClicked) },
+                enabled = !uiState.isLoading,
+            ) {
+                if (uiState.isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.padding(2.dp),
+                        strokeWidth = 2.dp,
+                    )
+                } else {
+                    Text(text = "Войти")
+                }
             }
-            TextButton(onClick = onOpenRegister) { Text(text = "Create account") }
+            TextButton(onClick = onOpenRegister) { Text(text = "Создать аккаунт") }
         }
     }
 }

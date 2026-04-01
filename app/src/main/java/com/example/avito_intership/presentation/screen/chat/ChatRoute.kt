@@ -8,11 +8,11 @@ import com.example.avito_intership.presentation.components.ScreenScaffold
 fun ChatRoute(
     onNavigateBack: () -> Unit,
 ) {
-    ScreenScaffold(title = "Chat") {
+    ScreenScaffold(title = "Чат") {
         PlaceholderScreen(
-            title = "Conversation",
-            description = "Messages will appear here",
-            primaryActionLabel = "Back",
+            title = "Диалог",
+            description = "Здесь будут отображаться сообщения",
+            primaryActionLabel = "Назад",
             onPrimaryAction = onNavigateBack,
         )
     }

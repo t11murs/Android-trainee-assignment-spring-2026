@@ -16,11 +16,13 @@ import androidx.compose.ui.Modifier
 fun ScreenScaffold(
     title: String,
     modifier: Modifier = Modifier,
+    snackbarHost: @Composable () -> Unit = {},
     topBarActions: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
+        snackbarHost = snackbarHost,
         topBar = {
             TopAppBar(
                 title = { Text(text = title) },

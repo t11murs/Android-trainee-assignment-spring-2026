@@ -25,8 +25,16 @@ fun AppNavHost(
     ) {
         composable(AppDestination.Splash.route) {
             SplashRoute(
-                onOpenAuth = { navController.navigate(AppDestination.Auth.route) },
-                onOpenChatList = { navController.navigate(AppDestination.ChatList.route) },
+                onOpenAuth = {
+                    navController.navigate(AppDestination.Auth.route) {
+                        popUpTo(AppDestination.Splash.route) { inclusive = true }
+                    }
+                },
+                onOpenChatList = {
+                    navController.navigate(AppDestination.ChatList.route) {
+                        popUpTo(AppDestination.Splash.route) { inclusive = true }
+                    }
+                },
             )
         }
         composable(AppDestination.Auth.route) {
@@ -53,6 +61,11 @@ fun AppNavHost(
             ChatListRoute(
                 onOpenChat = { navController.navigate(AppDestination.Chat.route) },
                 onOpenProfile = { navController.navigate(AppDestination.Profile.route) },
+                onLoggedOut = {
+                    navController.navigate(AppDestination.Auth.route) {
+                        popUpTo(AppDestination.ChatList.route) { inclusive = true }
+                    }
+                },
             )
         }
         composable(AppDestination.Chat.route) {
