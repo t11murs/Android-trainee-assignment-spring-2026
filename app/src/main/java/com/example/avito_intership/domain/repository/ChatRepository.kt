@@ -1,10 +1,12 @@
 package com.example.avito_intership.domain.repository
 
+import androidx.paging.PagingData
 import com.example.avito_intership.domain.model.Chat
 import kotlinx.coroutines.flow.Flow
 
 interface ChatRepository {
     fun observeChats(): Flow<List<Chat>>
+    fun observePagedChats(query: String): Flow<PagingData<Chat>>
     fun observeChat(chatId: String): Flow<Chat?>
     suspend fun getChat(chatId: String): Chat?
     suspend fun searchChats(query: String): List<Chat>

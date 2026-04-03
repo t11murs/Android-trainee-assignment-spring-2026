@@ -1,5 +1,6 @@
 package com.example.avito_intership.data.local.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -12,6 +13,15 @@ interface ChatDao {
 
     @Query("SELECT * FROM chats ORDER BY updatedAt DESC")
     fun observeChats(): Flow<List<ChatEntity>>
+
+    @Query(
+        """
+        SELECT * FROM chats
+        WHERE (:query = '' OR title LIKE '%' || :query || '%')
+        ORDER BY updatedAt DESC
+        """,
+    )
+    fun pagingSource(query: String): PagingSource<Int, ChatEntity>
 
     @Query("SELECT * FROM chats WHERE id = :chatId LIMIT 1")
     fun observeChat(chatId: String): Flow<ChatEntity?>

@@ -17,6 +17,7 @@ fun ScreenScaffold(
     title: String,
     modifier: Modifier = Modifier,
     snackbarHost: @Composable () -> Unit = {},
+    navigationIcon: @Composable () -> Unit = {},
     topBarActions: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
@@ -26,6 +27,7 @@ fun ScreenScaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = title) },
+                navigationIcon = navigationIcon,
                 actions = { topBarActions() },
             )
         },

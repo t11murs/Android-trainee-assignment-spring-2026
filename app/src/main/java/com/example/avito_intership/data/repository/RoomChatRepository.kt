@@ -1,5 +1,9 @@
 package com.example.avito_intership.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.example.avito_intership.data.local.dao.ChatDao
 import com.example.avito_intership.data.mapper.LocalStorageMapper
 import com.example.avito_intership.domain.model.Chat
@@ -17,6 +21,17 @@ class RoomChatRepository @Inject constructor(
 
     override fun observeChats(): Flow<List<Chat>> {
         return chatDao.observeChats().map { chats -> chats.map(mapper::toDomain) }
+    }
+
+    override fun observePagedChats(query: String): Flow<PagingData<Chat>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                initialLoadSize = 20,
+                enablePlaceholders = false,
+            ),
+            pagingSourceFactory = { chatDao.pagingSource(query.trim()) },
+        ).flow.map { pagingData -> pagingData.map(mapper::toDomain) }
     }
 
     override fun observeChat(chatId: String): Flow<Chat?> {

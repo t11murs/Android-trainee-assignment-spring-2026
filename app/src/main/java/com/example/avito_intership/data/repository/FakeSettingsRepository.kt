@@ -12,4 +12,8 @@ class FakeSettingsRepository @Inject constructor() : SettingsRepository {
     private val themeMode = MutableStateFlow(ThemeMode.SYSTEM)
 
     override fun observeThemeMode(): Flow<ThemeMode> = themeMode
+
+    override suspend fun updateThemeMode(themeMode: ThemeMode) {
+        this.themeMode.value = themeMode
+    }
 }

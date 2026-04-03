@@ -5,3 +5,6 @@ local.properties
 *.iml
 build/
 app/build/
+.android-user-home/
+.gradle-project-cache/
+.user-home/

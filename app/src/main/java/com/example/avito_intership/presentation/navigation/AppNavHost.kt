@@ -2,9 +2,11 @@ package com.example.avito_intership.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.avito_intership.presentation.screen.auth.AuthRoute
 import com.example.avito_intership.presentation.screen.auth.RegisterRoute
 import com.example.avito_intership.presentation.screen.chat.ChatRoute
@@ -59,7 +61,9 @@ fun AppNavHost(
         }
         composable(AppDestination.ChatList.route) {
             ChatListRoute(
-                onOpenChat = { navController.navigate(AppDestination.Chat.route) },
+                onOpenChat = { chatId ->
+                    navController.navigate(AppDestination.Chat.createRoute(chatId))
+                },
                 onOpenProfile = { navController.navigate(AppDestination.Profile.route) },
                 onLoggedOut = {
                     navController.navigate(AppDestination.Auth.route) {
@@ -68,8 +72,16 @@ fun AppNavHost(
                 },
             )
         }
-        composable(AppDestination.Chat.route) {
-            ChatRoute(onNavigateBack = { navController.popBackStack() })
+        composable(
+            route = AppDestination.Chat.route,
+            arguments = listOf(
+                navArgument("chatId") { type = NavType.StringType },
+            ),
+        ) { backStackEntry ->
+            ChatRoute(
+                chatId = backStackEntry.arguments?.getString("chatId").orEmpty(),
+                onNavigateBack = { navController.popBackStack() },
+            )
         }
         composable(AppDestination.Profile.route) {
             ProfileRoute(onNavigateBack = { navController.popBackStack() })
