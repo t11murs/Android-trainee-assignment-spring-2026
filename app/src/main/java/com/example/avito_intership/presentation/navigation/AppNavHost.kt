@@ -84,7 +84,14 @@ fun AppNavHost(
             )
         }
         composable(AppDestination.Profile.route) {
-            ProfileRoute(onNavigateBack = { navController.popBackStack() })
+            ProfileRoute(
+                onNavigateBack = { navController.popBackStack() },
+                onLoggedOut = {
+                    navController.navigate(AppDestination.Auth.route) {
+                        popUpTo(AppDestination.ChatList.route) { inclusive = true }
+                    }
+                },
+            )
         }
     }
 }
