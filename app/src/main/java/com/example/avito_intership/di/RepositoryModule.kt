@@ -1,9 +1,11 @@
 package com.example.avito_intership.di
 
 import com.example.avito_intership.data.repository.DataStoreSettingsRepository
+import com.example.avito_intership.data.repository.FakeAiRepository
 import com.example.avito_intership.data.repository.FirebaseAuthRepository
 import com.example.avito_intership.data.repository.RoomChatRepository
 import com.example.avito_intership.data.repository.RoomMessageRepository
+import com.example.avito_intership.domain.repository.AiRepository
 import com.example.avito_intership.domain.repository.AuthRepository
 import com.example.avito_intership.domain.repository.ChatRepository
 import com.example.avito_intership.domain.repository.MessageRepository
@@ -29,6 +31,12 @@ abstract class RepositoryModule {
     abstract fun bindAuthRepository(
         repository: FirebaseAuthRepository,
     ): AuthRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAiRepository(
+        repository: FakeAiRepository,
+    ): AiRepository
 
     @Binds
     @Singleton
