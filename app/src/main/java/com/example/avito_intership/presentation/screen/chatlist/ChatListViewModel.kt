@@ -45,9 +45,7 @@ class ChatListViewModel @Inject constructor(
             chatRepository.observePagedChats(currentQuery)
         }
         .map { pagingData ->
-            pagingData.map { chat ->
-                chat.toUi()
-            }
+            pagingData.map { chat -> chat.toUi() }
         }
         .cachedIn(viewModelScope)
 

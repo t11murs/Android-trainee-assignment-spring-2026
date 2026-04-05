@@ -10,6 +10,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -43,7 +44,7 @@ fun RegisterRoute(
                         actionLabel = if (effect.canRetry) "Повторить" else null,
                         duration = SnackbarDuration.Long,
                     )
-                    if (effect.canRetry && result == androidx.compose.material3.SnackbarResult.ActionPerformed) {
+                    if (effect.canRetry && result == SnackbarResult.ActionPerformed) {
                         viewModel.onAction(RegisterAction.RetryClicked)
                     }
                 }
@@ -67,7 +68,7 @@ fun RegisterRoute(
                 value = uiState.email,
                 onValueChange = { viewModel.onAction(RegisterAction.EmailChanged(it)) },
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Email") },
+                label = { Text("E-mail") },
                 enabled = !uiState.isLoading,
                 singleLine = true,
             )
@@ -102,7 +103,9 @@ fun RegisterRoute(
                     Text(text = "Зарегистрироваться")
                 }
             }
-            TextButton(onClick = onNavigateBack) { Text(text = "Назад ко входу") }
+            TextButton(onClick = onNavigateBack) {
+                Text(text = "Назад ко входу")
+            }
         }
     }
 }

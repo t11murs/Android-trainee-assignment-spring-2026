@@ -1,6 +1,7 @@
 package com.example.avito_intership.presentation.theme
 
 import android.app.Activity
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -65,6 +66,8 @@ fun AiAssistantTheme(
         SideEffect {
             val window = (context as Activity).window
             window.statusBarColor = colors.background.toArgb()
+            window.navigationBarColor = colors.background.toArgb()
+            window.setBackgroundDrawable(ColorDrawable(colors.background.toArgb()))
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !useDarkTheme
         }
     }

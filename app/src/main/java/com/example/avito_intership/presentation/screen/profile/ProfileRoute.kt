@@ -12,11 +12,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.LightMode
-import androidx.compose.material.icons.outlined.Logout
-import androidx.compose.material.icons.outlined.SettingsBrightness
 import androidx.compose.material.icons.outlined.PersonOutline
+import androidx.compose.material.icons.outlined.SettingsBrightness
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.avito_intership.core.theme.ThemeMode
@@ -118,7 +119,7 @@ fun ProfileRoute(
                         )
 
                         uiState.email?.let {
-                            InfoRow(label = "Email", value = it)
+                            InfoRow(label = "E-mail", value = it)
                         }
                         InfoRow(
                             label = "Телефон",
@@ -177,7 +178,7 @@ fun ProfileRoute(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.Logout,
+                        imageVector = Icons.AutoMirrored.Outlined.Logout,
                         contentDescription = null,
                         modifier = Modifier.padding(end = 8.dp),
                     )
@@ -213,7 +214,7 @@ private fun InfoRow(
 private fun ThemeChip(
     label: String,
     selected: Boolean,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     onClick: () -> Unit,
 ) {
     AssistChip(

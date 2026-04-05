@@ -2,9 +2,8 @@ package com.example.avito_intership.data.local.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import com.example.avito_intership.data.local.entity.ChatEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -38,9 +37,9 @@ interface ChatDao {
     )
     suspend fun searchChats(query: String): List<ChatEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun upsertChat(chat: ChatEntity)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun upsertChats(chats: List<ChatEntity>)
 }

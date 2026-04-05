@@ -94,15 +94,6 @@ fun ChatRoute(
         Column(
             modifier = Modifier.fillMaxSize(),
         ) {
-            Text(
-                text = "ID чата: $chatId",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-
             if (uiState.messages.isEmpty()) {
                 Box(
                     modifier = Modifier

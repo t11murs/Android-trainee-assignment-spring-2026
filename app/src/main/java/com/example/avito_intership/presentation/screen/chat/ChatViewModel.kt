@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -147,7 +146,8 @@ class ChatViewModel @Inject constructor(
             val failedIndex = messages.indexOfFirst { it.id == messageId }
             if (failedIndex <= 0) return@launch
 
-            val userText = messages.subList(0, failedIndex).lastOrNull { it.role == MessageRole.USER }?.text ?: return@launch
+            val userText = messages.subList(0, failedIndex).lastOrNull { it.role == MessageRole.USER }?.text
+                ?: return@launch
             val retryMessage = Message(
                 id = messageId,
                 chatId = currentChatId,

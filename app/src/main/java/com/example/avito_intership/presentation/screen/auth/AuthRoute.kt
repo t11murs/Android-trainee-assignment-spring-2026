@@ -10,6 +10,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -43,7 +44,7 @@ fun AuthRoute(
                         actionLabel = if (effect.canRetry) "Повторить" else null,
                         duration = SnackbarDuration.Long,
                     )
-                    if (effect.canRetry && result == androidx.compose.material3.SnackbarResult.ActionPerformed) {
+                    if (effect.canRetry && result == SnackbarResult.ActionPerformed) {
                         viewModel.onAction(AuthAction.RetryClicked)
                     }
                 }
@@ -52,7 +53,7 @@ fun AuthRoute(
     }
 
     ScreenScaffold(
-        title = "Вход",
+        title = "Вход в аккаунт",
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) {
         Column(
@@ -67,7 +68,7 @@ fun AuthRoute(
                 value = uiState.email,
                 onValueChange = { viewModel.onAction(AuthAction.EmailChanged(it)) },
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Email") },
+                label = { Text("E-mail") },
                 enabled = !uiState.isLoading,
                 singleLine = true,
             )
@@ -93,7 +94,9 @@ fun AuthRoute(
                     Text(text = "Войти")
                 }
             }
-            TextButton(onClick = onOpenRegister) { Text(text = "Создать аккаунт") }
+            TextButton(onClick = onOpenRegister) {
+                Text(text = "Регистрация")
+            }
         }
     }
 }

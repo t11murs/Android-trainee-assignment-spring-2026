@@ -30,6 +30,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.Button
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -207,6 +208,32 @@ fun ChatListRoute(
                             verticalArrangement = Arrangement.Center,
                         ) {
                             CircularProgressIndicator()
+                        }
+                    }
+
+                    chats.loadState.refresh is LoadState.Error -> {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+                            Text(
+                                text = "Не удалось загрузить чаты",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                            Text(
+                                text = "Проверьте подключение и повторите попытку",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(top = 4.dp),
+                            )
+                            Button(
+                                onClick = { chats.retry() },
+                                modifier = Modifier.padding(top = 12.dp),
+                            ) {
+                                Text(text = "Повторить")
+                            }
                         }
                     }
 
