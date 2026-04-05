@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
-import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Logout
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.ModeEdit
@@ -19,6 +17,7 @@ import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -49,8 +49,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.example.avito_intership.presentation.components.ScreenScaffold
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.material3.DrawerValue
 
 @Composable
 fun ChatListRoute(
@@ -138,20 +136,6 @@ fun ChatListRoute(
                         icon = {
                             Icon(
                                 imageVector = Icons.Outlined.ChatBubbleOutline,
-                                contentDescription = null,
-                            )
-                        },
-                    )
-
-                    NavigationDrawerItem(
-                        label = { Text("Изображения", fontSize = 18.sp) },
-                        selected = false,
-                        onClick = {
-                            scope.launch { drawerState.close() }
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Outlined.Image,
                                 contentDescription = null,
                             )
                         },

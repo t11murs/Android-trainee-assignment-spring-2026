@@ -1,8 +1,8 @@
 package com.example.avito_intership.di
 
 import com.example.avito_intership.data.repository.DataStoreSettingsRepository
-import com.example.avito_intership.data.repository.FakeAiRepository
 import com.example.avito_intership.data.repository.FirebaseAuthRepository
+import com.example.avito_intership.data.repository.GigaChatAiRepository
 import com.example.avito_intership.data.repository.RoomChatRepository
 import com.example.avito_intership.data.repository.RoomMessageRepository
 import com.example.avito_intership.domain.repository.AiRepository
@@ -35,7 +35,7 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindAiRepository(
-        repository: FakeAiRepository,
+        repository: GigaChatAiRepository,
     ): AiRepository
 
     @Binds

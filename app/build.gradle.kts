@@ -1,9 +1,18 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.android)
+}
+
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
 }
 
 if (file("google-services.json").exists()) {
@@ -42,6 +51,20 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+
+    defaultConfig {
+        buildConfigField(
+            "String",
+            "GIGACHAT_AUTH_KEY",
+            "\"${localProperties.getProperty("GIGACHAT_AUTH_KEY", "")}\"",
+        )
+        buildConfigField(
+            "String",
+            "GIGACHAT_SCOPE",
+            "\"${localProperties.getProperty("GIGACHAT_SCOPE", "GIGACHAT_API_PERS")}\"",
+        )
     }
 }
 
@@ -64,6 +87,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.paging)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(platform(libs.firebase.bom))
